@@ -44,8 +44,10 @@ export function scrollToTarget(target) {
   }
   const el = typeof target === 'string' ? findHashTarget(target) : target;
   if (!el) return;
-  if (lenis) lenis.scrollTo(el);
-  else window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY + NAV_OFFSET, behavior: reducedMotion() ? 'auto' : 'smooth' });
+  // Ziel aus der aktuellen, echten Scrollposition berechnen (Lenis' interner Wert kann veraltet sein)
+  const top = el.getBoundingClientRect().top + window.scrollY + NAV_OFFSET;
+  if (lenis) lenis.scrollTo(Math.max(0, top));
+  else window.scrollTo({ top, behavior: reducedMotion() ? 'auto' : 'smooth' });
 }
 
 // Tastaturfokus an das Sprungziel übergeben (wie beim normalen Browser-Sprung)

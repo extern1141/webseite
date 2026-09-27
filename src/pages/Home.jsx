@@ -1,4 +1,5 @@
 import Layout from '../components/Layout.jsx';
+import Journey from '../components/Journey.jsx';
 import Hero from '../components/Hero.jsx';
 import Marquee from '../components/Marquee.jsx';
 import Pillars from '../components/Pillars.jsx';
@@ -9,6 +10,7 @@ import { INTEREST } from '../content/site.js';
 export default function Home() {
   return (
     <Layout current="home">
+      <Journey />
       <Hero />
       <Marquee />
       <Pillars />

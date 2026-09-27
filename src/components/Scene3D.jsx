@@ -221,7 +221,16 @@ export default function Scene3D({ variant = 'home' }) {
         const dt = Math.max(0, Math.min((now - last) / 1000, 0.05));
         last = now;
         const vh = h || 1;
-        const p = Math.min(window.scrollY / vh, 3); // 0 = oben, 1 = eine Bildschirmhöhe gescrollt
+        // Version 3: solange die 3D-Reise zu sehen ist, pausiert der Hintergrund-Globus
+        const journey = document.querySelector('.journey.is-ready');
+        if (journey && journey.getBoundingClientRect().bottom > vh * 0.15) {
+          canvas.style.opacity = '0';
+          if (running) raf = requestAnimationFrame(frame);
+          return;
+        }
+        canvas.style.opacity = '';
+        const heroTop = document.getElementById('home')?.offsetTop ?? 0;
+        const p = Math.min(Math.max(0, window.scrollY - heroTop) / vh, 3); // 0 = Hero oben
         const L = layout();
         // Beim Scrollen wandert der Globus nach hinten und wird zur ruhigen Kulisse
         const target = {

@@ -85,6 +85,120 @@ main {
   overflow-x: clip;
 }
 
+/* Version 3: Scroll-Reise */
+.journey {
+  position: relative;
+  height: 750vh;
+  z-index: 2;
+  background: #02040c;
+}
+.journey.is-off {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .journey {
+    display: none;
+  }
+}
+.journey-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+.journey-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.journey.is-ready .journey-canvas {
+  opacity: 1;
+}
+.journey-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(2, 4, 12, 0.75) 100%);
+}
+.journey-flash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle at center, #ffffff 0%, #bff3ff 30%, #3d8bff 70%, #02040c 100%);
+  mix-blend-mode: screen;
+}
+.journey-fadeout {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--bg);
+  opacity: var(--fade-out, 0);
+}
+.journey-captions {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: end center;
+  pointer-events: none;
+  padding: 0 24px 11vh;
+  background: linear-gradient(to top, rgba(2, 4, 12, 0.7), transparent 45%);
+}
+.journey-caption {
+  grid-area: 1 / 1;
+  max-width: 720px;
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  opacity: 0;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+  will-change: opacity, transform;
+}
+.journey:not(.is-ready) .journey-caption.first {
+  opacity: 1;
+}
+.journey-caption h2 {
+  font-size: clamp(2rem, 5vw, 4rem);
+}
+.journey-caption p {
+  font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+  color: #c9d6f2;
+  max-width: 560px;
+}
+.journey-rail {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  width: min(280px, 60vw);
+  height: 2px;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+.journey-rail span {
+  display: block;
+  height: 100%;
+  background: var(--gradient);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+@media (max-width: 640px) {
+  .journey-rail {
+    bottom: 76px;
+  }
+}
+.journey .journey-skip {
+  position: absolute;
+  right: 24px;
+  bottom: 18px;
+  z-index: 2;
+}
+
 /* Version 2: feste 3D-Szene hinter der ganzen Seite */
 .scene-3d {
   position: fixed;
