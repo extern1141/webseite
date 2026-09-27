@@ -1,26 +1,92 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MDK-IT | Professionelle IT-Services in Ludwigsburg</title>
-  <meta name="description" content="MDK-IT modernisiert Ihre IT-Infrastruktur: Cloud, On-Premise und hybride Umgebungen, Datensicherung & Recovery sowie IT-Support & Wartung aus Ludwigsburg." />
-  <meta name="theme-color" content="#050914" />
-  <meta property="og:title" content="MDK-IT | IT-Infrastruktur für morgen" />
-  <meta property="og:description" content="Cloud, On-Premise & Hybrid, Datensicherung und IT-Support aus Ludwigsburg." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.mdk-it.com/" />
-  <meta property="og:image" content="https://www.mdk-it.com/img/hero.webp" />
-  <link rel="icon" type="image/png" href="/favicon.png" />
-  <link rel="preload" href="/img/hero.webp" as="image" type="image/webp" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MDK-IT | Professionelle IT-Infrastruktur & Webdesign Ludwigsburg</title>
+    
+    <!-- Meta Tags für SEO -->
+    <meta name="description" content="MDK-IT ist Ihr Partner in Ludwigsburg für professionelle IT-Infrastruktur, Netzwerke und Cloud für KMU sowie Komplett-Pakete (Webseite, Logo, SEO) für Start-ups.">
+    <meta name="keywords" content="IT-Infrastruktur, Active Directory, Entra ID, Intune, Webdesign, Stuttgart, Baden-Württemberg, Ludwigsburg, Netzwerk, Netzwerktechnik, Netapp, Server, Cloud Migration, IT Support, Datenrettung, Laptop Reparatur, SEO, Start-up Paket, Google Maps, IT Service">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6F3JCEJMM9"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6F3JCEJMM9');
+    </script>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.mdk-it.com/">
+    <meta property="og:title" content="MDK-IT | IT-Infrastruktur & Webdesign Ludwigsburg">
+    <meta property="og:description" content="Professionelle IT-Infrastruktur, Netzwerke und Cloud für KMU sowie Komplett-Pakete (Webseite, Logo, SEO) für Start-ups in Ludwigsburg & Stuttgart.">
+    <meta property="og:image" content="https://www.mdk-it.com/bilder/blue-cable.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.mdk-it.com/">
+    <meta property="twitter:title" content="MDK-IT | IT-Infrastruktur & Webdesign Ludwigsburg">
+    <meta property="twitter:description" content="Professionelle IT-Infrastruktur, Netzwerke und Cloud für KMU sowie Komplett-Pakete (Webseite, Logo, SEO) für Start-ups in Ludwigsburg & Stuttgart.">
+    <meta property="twitter:image" content="https://www.mdk-it.com/bilder/blue-cable.jpg">
+
+    <link rel="canonical" href="https://www.mdk-it.com/">
+
+    <!-- Structured Data (Schema.org / LocalBusiness JSON-LD) für SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "MDK-IT",
+      "image": "https://www.mdk-it.com/bilder/logo/Transparent%20Logo%20Mica.png",
+      "@id": "https://www.mdk-it.com/#localbusiness",
+      "url": "https://www.mdk-it.com",
+      "telephone": "+49-177-699-2314",
+      "email": "info@mdk-it.com",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Asperger Straße 30",
+        "addressLocality": "Ludwigsburg",
+        "postalCode": "71634",
+        "addressCountry": "DE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 48.8973,
+        "longitude": 9.1857
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "08:00",
+        "closes": "16:00"
+      }
+    }
+    </script>
+
+    <meta name="theme-color" content="#050914">
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <!-- Andere Seiten beim Überfahren eines Links vorladen (sofortiger Seitenwechsel) -->
+    <script type="speculationrules">
+    {"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target=_blank]"}}]},"eagerness":"moderate"}]}
+    </script>
+    <noscript><style>[style*="opacity"]{opacity:1!important}[style*="transform"]{transform:none!important}[style*="clip-path"]{clip-path:none!important}</style></noscript>
 </head>
+
 <body>
-  <div id="root"></div>
-  <noscript>
-    <h1>MDK-IT – IT-Infrastruktur für morgen</h1>
-    <p>IT-Infrastruktur, Datensicherung &amp; Recovery, IT Support &amp; Wartung.</p>
-    <p>Asperger Straße 30, 71634 Ludwigsburg · Telefon: +49 (0) 177 699 2314 · E-Mail: info@mdk-it.com</p>
-  </noscript>
-  <script type="module" src="/src/main.jsx"></script>
+    <div id="root"><!--app-html--></div>
+    <script type="module" src="/src/entries/home.jsx"></script>
 </body>
+
 </html>

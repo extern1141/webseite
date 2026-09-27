@@ -10,7 +10,7 @@ import {
   useVelocity,
 } from 'framer-motion';
 
-const words = ['Cloud', 'On-Premise', 'Hybrid', 'Migration', 'Backup', 'Recovery', 'Monitoring', 'Wartung', 'Sicherheit', 'Support'];
+const words = ['Netzwerke', 'Server', 'Azure Cloud', 'Firewalls', 'WLAN', 'Backup', 'Webdesign', 'Lokales SEO', 'Logo-Design', 'Google Maps', 'Laptop-Reparatur', 'Datenrettung'];
 
 const wrap = (min, max, v) => {
   const range = max - min;

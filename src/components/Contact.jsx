@@ -1,61 +1,80 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SplitReveal, FadeUp } from './Reveal.jsx';
 import Magnetic from './Magnetic.jsx';
 import TiltCard from './TiltCard.jsx';
+import Icon from './Icon.jsx';
+import { CONTACT, WEB3FORMS_KEY } from '../content/site.js';
 
-const EMAIL = 'info@mdk-it.com';
+const SUCCESS_TEXT = 'Vielen Dank! Ihre Nachricht wurde erfolgreich übermittelt. Wir melden uns in Kürze bei Ihnen.';
 
 const info = [
-  { title: 'Adresse', lines: ['Asperger Straße 30', '71634 Ludwigsburg', 'Deutschland'], icon: '⌖' },
+  { title: 'Adresse', icon: 'pin', lines: [CONTACT.street, CONTACT.city, CONTACT.country] },
   {
-    title: 'Kontakt',
+    title: 'Direkter Kontakt',
+    icon: 'phone',
     lines: [
-      <a key="tel" href="tel:+491776992314">+49 (0) 177 699 2314</a>,
-      <a key="mail" href={`mailto:${EMAIL}`}>{EMAIL}</a>,
+      <>
+        Telefon: <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+      </>,
+      <>
+        E-Mail: <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+      </>,
     ],
-    icon: '✆',
   },
-  { title: 'Verfügbarkeit', lines: ['Montag – Freitag', '08:00 – 16:00 Uhr'], icon: '◷' },
+  { title: 'Geschäftszeiten', icon: 'clock', lines: [CONTACT.hours, CONTACT.hoursNote] },
 ];
 
-function Field({ id, label, type = 'text', required, textarea }) {
-  const Tag = textarea ? 'textarea' : 'input';
-  return (
-    <div className={`field ${textarea ? 'full' : ''}`}>
-      <Tag id={id} name={id} type={textarea ? undefined : type} required={required} placeholder=" " rows={textarea ? 5 : undefined} />
-      <label htmlFor={id}>
-        {label}
-        {required && ' *'}
-      </label>
-      <span className="field-line" aria-hidden="true" />
-    </div>
-  );
-}
+// Kontaktformular mit Versand über Web3Forms (wie auf der bisherigen Seite).
+// Jede Seite übergibt eigene Texte, Betreffzeile und Auswahlmöglichkeiten.
+export default function Contact({
+  title,
+  intro,
+  subject,
+  interestLabel = 'Interesse an *',
+  options,
+  defaultInterest = '',
+  extraField = { id: 'company', name: 'company', label: 'Unternehmen (Optional)', placeholder: 'Name Ihrer Firma' },
+  emailPlaceholder = 'name@firma.de',
+  messageLabel = 'Ihre Nachricht *',
+  messagePlaceholder = 'Wie können wir Ihnen helfen?',
+  submitLabel = 'Nachricht senden',
+}) {
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | error
+  const [error, setError] = useState('');
+  const [interest, setInterest] = useState(defaultInterest);
 
-export default function Contact() {
-  const [sent, setSent] = useState(false);
+  // Buttons wie "Dieses Paket anfragen" wählen das passende Interesse vor
+  useEffect(() => {
+    const onSelect = (e) => setInterest(e.detail);
+    window.addEventListener('mdk:select-interest', onSelect);
+    return () => window.removeEventListener('mdk:select-interest', onSelect);
+  }, []);
 
-  // Öffnet das E-Mail-Programm mit vorausgefüllter Nachricht an info@mdk-it.com
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
-    const data = Object.fromEntries(new FormData(form));
-    const subject = `Anfrage Erstgespräch – ${data.name}${data.company ? ` (${data.company})` : ''}`;
-    const body = [
-      data.message,
-      '',
-      '---',
-      `Name: ${data.name}`,
-      `E-Mail: ${data.email}`,
-      data.company && `Unternehmen: ${data.company}`,
-      data.phone && `Telefon: ${data.phone}`,
-    ]
-      .filter((l) => l !== undefined && l !== '')
-      .join('\n');
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setSent(true);
-    form.reset();
+    setStatus('sending');
+    setError('');
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      });
+      const result = await response.json();
+      if (response.ok && result.success) {
+        setStatus('sent');
+        form.reset();
+        setInterest(defaultInterest);
+      } else {
+        setStatus('error');
+        setError(result.message || 'Es gab einen Fehler beim Versenden. Bitte versuchen Sie es später erneut.');
+      }
+    } catch {
+      setStatus('error');
+      setError('Es gab einen Fehler bei der Verbindung. Bitte prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.');
+    }
   };
 
   return (
@@ -67,46 +86,72 @@ export default function Contact() {
           <FadeUp as="span" className="eyebrow">
             Kontakt
           </FadeUp>
-          <SplitReveal as="h2" text="Buchen Sie Ihr kostenloses Erstgespräch" />
+          <SplitReveal as="h2" text={title} />
           <FadeUp as="p" delay={0.2}>
-            Und finden Sie heraus, wie es besser, schneller und einfacher geht.
+            {intro}
           </FadeUp>
         </header>
 
         <div className="contact-wrapper">
           <FadeUp className="contact-form-wrap">
-            <AnimatePresence mode="wait">
-              {sent ? (
+            <AnimatePresence mode="wait" initial={false}>
+              {status === 'sent' ? (
                 <motion.div
                   key="done"
                   className="form-success"
+                  role="status"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
                 >
-                  <svg viewBox="0 0 52 52" className="check">
+                  <svg viewBox="0 0 52 52" className="check" aria-hidden="true">
                     <motion.circle cx="26" cy="26" r="24" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6 }} />
                     <motion.path d="M15 27 l7 7 l15 -16" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.4, delay: 0.5 }} />
                   </svg>
-                  <h3>Vielen Dank!</h3>
-                  <p>Ihr E-Mail-Programm wurde mit Ihrer Nachricht geöffnet. Bitte senden Sie die E-Mail dort ab – wir melden uns schnellstmöglich.</p>
-                  <button className="btn btn-ghost" onClick={() => setSent(false)}>
+                  <p>{SUCCESS_TEXT}</p>
+                  <button className="btn btn-ghost" onClick={() => setStatus('idle')}>
                     Neue Nachricht
                   </button>
                 </motion.div>
               ) : (
                 <motion.form key="form" className="contact-form" onSubmit={onSubmit} exit={{ opacity: 0, y: -20 }}>
+                  <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
+                  <input type="hidden" name="subject" value={subject} />
+                  <input type="checkbox" name="botcheck" className="hp-field" tabIndex={-1} autoComplete="off" aria-hidden="true" />
                   <div className="form-grid">
-                    <Field id="name" label="Name" required />
-                    <Field id="email" label="E-Mail" type="email" required />
-                    <Field id="company" label="Unternehmen" />
-                    <Field id="phone" label="Telefon" type="tel" />
-                    <Field id="message" label="Nachricht" required textarea />
+                    <Field id="name" label="Name *" required placeholder="Ihr vollständiger Name" autoComplete="name" />
+                    <Field id="email" label="E-Mail *" type="email" required placeholder={emailPlaceholder} autoComplete="email" />
+                    <Field id="phone" label="Telefonnummer" type="tel" placeholder="z.B. +49 177 123456" autoComplete="tel" />
+                    <div className="field">
+                      <label htmlFor="service-select">{interestLabel}</label>
+                      <div className="select-wrap">
+                        <select id="service-select" name="interessiert_an" required value={interest} onChange={(e) => setInterest(e.target.value)}>
+                          {defaultInterest === '' && (
+                            <option value="" disabled>
+                              Bitte auswählen...
+                            </option>
+                          )}
+                          {options.map((o) => (
+                            <option key={o.value} value={o.value}>
+                              {o.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <span className="field-line" aria-hidden="true" />
+                    </div>
+                    <Field id={extraField.id} name={extraField.name} label={extraField.label} placeholder={extraField.placeholder} full />
+                    <Field id="message" label={messageLabel} required placeholder={messagePlaceholder} textarea />
                   </div>
+                  {status === 'error' && (
+                    <p className="form-error" role="alert">
+                      {error}
+                    </p>
+                  )}
                   <Magnetic strength={0.2}>
-                    <button type="submit" className="btn btn-primary">
-                      <span>Nachricht senden</span>
-                      <span className="btn-arrow">→</span>
+                    <button type="submit" className="btn btn-primary" disabled={status === 'sending'}>
+                      <span>{status === 'sending' ? 'Wird gesendet...' : submitLabel}</span>
+                      <Icon name="arrow" size={18} className="btn-arrow" />
                     </button>
                   </Magnetic>
                 </motion.form>
@@ -118,7 +163,9 @@ export default function Contact() {
             {info.map((b, i) => (
               <FadeUp key={b.title} delay={0.1 * i}>
                 <TiltCard className="info-card" max={10}>
-                  <span className="info-icon">{b.icon}</span>
+                  <span className="info-icon">
+                    <Icon name={b.icon} />
+                  </span>
                   <div>
                     <h3>{b.title}</h3>
                     {b.lines.map((l, j) => (
@@ -132,5 +179,24 @@ export default function Contact() {
         </div>
       </div>
     </section>
+  );
+}
+
+function Field({ id, name = id, label, type = 'text', required, placeholder, textarea, full, autoComplete }) {
+  const Tag = textarea ? 'textarea' : 'input';
+  return (
+    <div className={`field ${textarea || full ? 'full' : ''}`}>
+      <label htmlFor={id}>{label}</label>
+      <Tag
+        id={id}
+        name={name}
+        type={textarea ? undefined : type}
+        required={required}
+        placeholder={placeholder}
+        rows={textarea ? 5 : undefined}
+        autoComplete={autoComplete}
+      />
+      <span className="field-line" aria-hidden="true" />
+    </div>
   );
 }
