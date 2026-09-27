@@ -80,7 +80,50 @@ a {
 }
 
 main {
+  position: relative;
+  z-index: 1;
   overflow-x: clip;
+}
+
+/* Version 2: feste 3D-Szene hinter der ganzen Seite */
+.scene-3d {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  pointer-events: none;
+}
+.scene-3d.is-ready {
+  opacity: 1;
+}
+.hero-globe-space {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: end center;
+  cursor: grab;
+}
+.hero-globe-space:active {
+  cursor: grabbing;
+}
+.globe-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6%;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(5, 9, 20, 0.6);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  backdrop-filter: blur(8px);
 }
 
 section {
@@ -451,7 +494,7 @@ h3 {
   align-items: center;
   padding: 130px 0 90px;
   overflow: hidden;
-  background: radial-gradient(ellipse at 70% 40%, #0d1b3d 0%, var(--bg) 65%);
+  background: transparent;
 }
 .hero-canvas {
   position: absolute;
@@ -700,7 +743,8 @@ h3 {
   overflow: hidden;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  background: var(--bg-2);
+  background: rgba(10, 18, 38, 0.72);
+  backdrop-filter: blur(6px);
 }
 .marquee-row {
   overflow: hidden;
@@ -970,7 +1014,7 @@ h3 {
 .contact {
   padding: 140px 0;
   overflow: hidden;
-  background: linear-gradient(180deg, var(--bg) 0%, #0a1433 100%);
+  background: linear-gradient(180deg, rgba(5, 9, 20, 0.35) 0%, rgba(10, 20, 51, 0.85) 100%);
 }
 .contact-blob {
   position: absolute;
@@ -1198,7 +1242,8 @@ h3 {
   overflow: hidden;
   padding-top: 80px;
   border-top: 1px solid var(--border);
-  background: var(--bg);
+  background: rgba(5, 9, 20, 0.9);
+  z-index: 1;
 }
 .footer-grid {
   display: grid;
@@ -1350,7 +1395,7 @@ h3 {
   align-items: center;
   padding: 150px 0 90px;
   overflow: hidden;
-  background: radial-gradient(ellipse at 60% 30%, #0d1b3d 0%, var(--bg) 70%);
+  background: transparent;
 }
 .page-hero.compact {
   min-height: 52vh;

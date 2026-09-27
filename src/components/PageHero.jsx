@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import NetworkCanvas from './NetworkCanvas.jsx';
 import { SplitReveal } from './Reveal.jsx';
 
 const ease = [0.22, 1, 0.36, 1];
@@ -15,7 +14,6 @@ export default function PageHero({ badge, title, text, compact }) {
 
   return (
     <section className={`page-hero ${compact ? 'compact' : ''}`} ref={ref}>
-      <NetworkCanvas className="hero-canvas" />
       <div className="hero-glow hero-glow-1" aria-hidden="true" />
       <div className="hero-glow hero-glow-2" aria-hidden="true" />
       <motion.div className="container page-hero-inner" style={{ y, opacity }}>

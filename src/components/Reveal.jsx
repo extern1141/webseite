@@ -40,8 +40,8 @@ export function FadeUp({ children, delay = 0, className, as = 'div', y = 40, amo
   return (
     <Comp
       className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y, rotateX: 14, transformPerspective: 900 }}
+      whileInView={{ opacity: 1, y: 0, rotateX: 0, transformPerspective: 900 }}
       viewport={{ once: true, amount }}
       transition={{ duration: 0.9, ease, delay }}
     >

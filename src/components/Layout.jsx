@@ -7,6 +7,7 @@ import ScrollProgress from './ScrollProgress.jsx';
 import Navbar from './Navbar.jsx';
 import Footer from './Footer.jsx';
 import ConsentBanner from './ConsentBanner.jsx';
+import Scene3D from './Scene3D.jsx';
 
 // Grundgerüst jeder Seite: Navigation, Effekte, Footer und weiches Scrollen
 export default function Layout({ current, children }) {
@@ -24,6 +25,7 @@ export default function Layout({ current, children }) {
 
   return (
     <MotionConfig reducedMotion="user">
+      <Scene3D variant={current === 'home' ? 'home' : 'sub'} />
       <Cursor />
       <ScrollProgress />
       <Navbar current={current} />

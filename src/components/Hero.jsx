@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
-import NetworkCanvas from './NetworkCanvas.jsx';
 import Magnetic from './Magnetic.jsx';
 import Icon from './Icon.jsx';
 import { SplitReveal } from './Reveal.jsx';
@@ -38,7 +37,6 @@ export default function Hero() {
 
   return (
     <section id="home" className="hero" ref={ref} onPointerMove={onMove}>
-      <NetworkCanvas className="hero-canvas" />
       <div className="hero-glow hero-glow-1" aria-hidden="true" />
       <div className="hero-glow hero-glow-2" aria-hidden="true" />
 
@@ -73,7 +71,7 @@ export default function Hero() {
             </Magnetic>
           </motion.div>
           <motion.p className="hero-hint" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.6 }}>
-            Tipp: Bewegen Sie die Maus oder klicken Sie ins Netzwerk.
+            Tipp: Ziehen Sie den Globus mit der Maus, um ihn zu drehen.
           </motion.p>
         </motion.div>
 
@@ -84,16 +82,11 @@ export default function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease, delay: 0.3 }}
         >
-          <motion.div className="hero-card" style={{ rotateX, rotateY }}>
-            <img
-              src="/img/hero.webp"
-              alt="MDK-IT B2B Netzwerkverkabelung und IT-Systeme in Ludwigsburg"
-              width="1024"
-              height="1024"
-              fetchPriority="high"
-            />
-            <div className="hero-card-shine" />
-            <div className="hero-card-scan" />
+          {/* Der 3D-Globus (Scene3D) liegt hier im Hintergrund; diese Fläche hält ihm den Platz frei */}
+          <motion.div className="hero-globe-space" style={{ rotateX, rotateY }}>
+            <span className="globe-label">
+              <span className="pulse-dot" /> Ludwigsburg
+            </span>
           </motion.div>
           <motion.div className="hero-chips" style={{ x: layerX, y: layerY }}>
             {chips.map((c, i) => (
@@ -112,8 +105,6 @@ export default function Hero() {
               </motion.a>
             ))}
           </motion.div>
-          <div className="orbit orbit-1" aria-hidden="true" />
-          <div className="orbit orbit-2" aria-hidden="true" />
         </motion.div>
       </div>
 

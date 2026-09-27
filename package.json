@@ -14,7 +14,8 @@
     "framer-motion": "^12.23.0",
     "lenis": "^1.3.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "three": "^0.180.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.0.0",
