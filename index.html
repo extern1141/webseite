@@ -4,179 +4,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MDK-IT | Professionelle IT-Services</title>
+    <title>MDK-IT | Professionelle IT-Infrastruktur & Webdesign Ludwigsburg</title>
     
-    <!-- Preload kritische Ressourcen -->
-    <link rel="preload" href="styles.css" as="style">
-    <link rel="preload" href="bilder/blue-cable.jpg" as="image">
-    <link rel="preload" href="bilder/logo/Transparent%20Logo%20Mica.png" as="image">
-    
-    <link rel="stylesheet" href="styles.css">
+    <!-- Meta Tags für SEO -->
+    <meta name="description" content="MDK-IT ist Ihr Partner in Ludwigsburg für professionelle IT-Infrastruktur, Netzwerke und Cloud für KMU sowie Komplett-Pakete (Webseite, Logo, SEO) für Start-ups.">
+    <meta name="keywords" content="IT-Infrastruktur, Active Directory, Entra ID, Intune, Webdesign, Stuttgart, Baden-Württemberg, Ludwigsburg, Netzwerk, Netzwerktechnik, Netapp, Server, Cloud Migration, IT Support, Datenrettung, Laptop Reparatur, SEO, Start-up Paket, Google Maps, IT Service">
+
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.mdk-it.com/">
+    <meta property="og:title" content="MDK-IT | IT-Infrastruktur & Webdesign Ludwigsburg">
+    <meta property="og:description" content="Professionelle IT-Infrastruktur, Netzwerke und Cloud für KMU sowie Komplett-Pakete (Webseite, Logo, SEO) für Start-ups in Ludwigsburg & Stuttgart.">
+    <meta property="og:image" content="https://www.mdk-it.com/bilder/blue-cable.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.mdk-it.com/">
+    <meta property="twitter:title" content="MDK-IT | IT-Infrastruktur & Webdesign Ludwigsburg">
+    <meta property="twitter:description" content="Professionelle IT-Infrastruktur, Netzwerke und Cloud für KMU sowie Komplett-Pakete (Webseite, Logo, SEO) für Start-ups in Ludwigsburg & Stuttgart.">
+    <meta property="twitter:image" content="https://www.mdk-it.com/bilder/blue-cable.jpg">
+
+    <link rel="canonical" href="https://www.mdk-it.com/">
+
+    <!-- Structured Data (Schema.org / LocalBusiness JSON-LD) für SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "MDK-IT",
+      "image": "https://www.mdk-it.com/bilder/logo/Transparent%20Logo%20Mica.png",
+      "@id": "https://www.mdk-it.com/#localbusiness",
+      "url": "https://www.mdk-it.com",
+      "telephone": "+49-177-699-2314",
+      "email": "info@mdk-it.com",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Asperger Straße 30",
+        "addressLocality": "Ludwigsburg",
+        "postalCode": "71634",
+        "addressCountry": "DE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 48.8973,
+        "longitude": 9.1857
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "08:00",
+        "closes": "16:00"
+      }
+    }
+    </script>
+
+    <meta name="theme-color" content="#050914">
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <!-- Andere Seiten beim Überfahren eines Links vorladen (sofortiger Seitenwechsel) -->
+    <script type="speculationrules">
+    {"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target=_blank]"}}]},"eagerness":"moderate"}]}
+    </script>
+    <noscript><style>[style*="opacity"]{opacity:1!important}[style*="transform"]{transform:none!important}[style*="clip-path"]{clip-path:none!important}[style*="opacity"].service-dim{opacity:0!important}.faq-answer{grid-template-rows:1fr!important}.faq-answer>div{visibility:visible!important}</style></noscript>
 </head>
 
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <span class="brand-icon" style="display: flex; align-items: center;">
-                    <img src="bilder/logo/Transparent%20Logo%20Mica.png" alt="MDK-IT Logo"
-                        style="height: 45px; width: auto;">
-                </span>
-                <span>MDK-IT</span>
-            </div>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#dienste">Dienste</a></li>
-                <li><a href="#contact">Kontakt</a></li>
-            </ul>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-bg"></div>
-        <div class="container hero-container">
-            <div class="hero-content">
-                <h1>IT-Infrastruktur für morgen</h1>
-                <p>Modernisieren Sie Ihre IT-Infrastruktur mit unserer umfassenden Expertise in Cloud, On-Premise und
-                    hybriden Umgebungen</p>
-                <a href="#contact" class="btn btn-primary">Jetzt Beratung buchen</a>
-            </div>
-            <div class="hero-image">
-                <img src="bilder/blue-cable.jpg" alt="Server" width="600" height="400" fetchpriority="high" decoding="async">
-            </div>
-        </div>
-    </section>
-
-    <!-- Dienste Section -->
-    <section id="dienste" class="dienste">
-        <div class="container">
-            <div class="section-header">
-                <h2>Unsere Dienste</h2>
-                <p>Alles für Ihre IT-Infrastruktur</p>
-            </div>
-        </div>
-
-        <div class="services-list">
-            <!-- Section 1: IT-Infrastruktur (Image Left, Text Right) -->
-            <div class="service-row">
-                <div class="service-image">
-                    <img src="bilder/px-402-6466141.jpg" alt="IT-Infrastruktur" width="690" height="460" decoding="async">
-                </div>
-                <div class="service-text">
-                    <h3>IT-Infrastruktur</h3>
-                    <p>Professioneller Aufbau und gezielte Weiterentwicklung Ihrer IT-Infrastruktur – individuell
-                        abgestimmt auf Ihre Anforderungen. Wir übernehmen die Migration, Implementierung und Verwaltung
-                        von Cloud-, hybriden und On-Premise-Lösungen und sorgen für maximale Skalierbarkeit, Sicherheit
-                        und Zukunftsfähigkeit.</p>
-                </div>
-            </div>
-
-            <!-- Section 2: Datensicherung & Recovery (Image Right, Text Left) -->
-            <div class="service-row reverse">
-                <div class="service-image">
-                    <img src="bilder/7TuVH.jpg" alt="Datensicherung & Recovery" width="624" height="416" decoding="async">
-                </div>
-                <div class="service-text">
-                    <h3>Datensicherung & Recovery</h3>
-                    <p>Ihre Daten sind das Herz Ihres Unternehmens – wir sorgen für deren Sicherheit. Durch intelligente
-                        Backup-Lösungen und klar strukturierte Recovery-Konzepte gewährleisten wir eine schnelle
-                        Wiederherstellung und minimieren Ausfallzeiten auf ein Minimum.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Section 3: IT Support (Image Left, Text Right) -->
-            <div class="service-row">
-                <div class="service-image">
-                    <img src="bilder/ymNeZ.jpg" alt="IT Support & Wartung" width="680" height="376" decoding="async">
-                </div>
-                <div class="service-text">
-                    <h3>IT Support & Wartung</h3>
-                    <p>Ein zuverlässiger IT-Betrieb erfordert kontinuierliche Betreuung – genau dafür sind wir da. Mit
-                        proaktivem Monitoring, regelmäßiger Wartung und schnellen Reaktionszeiten erkennen wir Probleme
-                        frühzeitig und beheben Störungen effizient. So stellen wir sicher, dass Ihre IT jederzeit
-                        stabil, sicher und leistungsfähig bleibt – damit Sie sich auf Ihr Kerngeschäft konzentrieren
-                        können.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-header white">
-                <h2><a href="#contactForm" style="color: inherit; text-decoration: none;">Buchen Sie Ihr kostenloses
-                        Erstgespräch</a></h2>
-                <p>Und finden raus, wie es besser, schneller und einfacher geht.</p>
-            </div>
-
-            <div class="contact-wrapper">
-                <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-                  <input type="hidden" name="access_key" value="1fddb19d-e867-4893-9ecc-66d486ad50fe">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="name">Name *</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">E-Mail *</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="company">Unternehmen</label>
-                            <input type="text" id="company" name="company">
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Telefon</label>
-                            <input type="tel" id="phone" name="phone">
-                        </div>
-                    </div>
-                    <div class="form-group full-width">
-                        <label for="message">Nachricht *</label>
-                        <textarea id="message" name="message" rows="6" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Nachricht senden</button>
-                    <div id="successMessage" class="success-message">
-                        <p>Vielen Dank! Wir werden uns bald bei Ihnen melden.</p>
-                    </div>
-                </form>
-
-                <div class="contact-info">
-                    <div class="info-block">
-                        <h3>Adresse</h3>
-                        <p>Asperger Straße 30<br>71634 Ludwigsburg<br>Deutschland</p>
-                    </div>
-                    <div class="info-block">
-                        <h3>Kontakt</h3>
-                        <p>Telefon: +49 (0) 177 699 2314<br>E-Mail: info@mdk-it.com</p>
-                    </div>
-                    <div class="info-block">
-                        <h3>Verfügbarkeit</h3>
-                        <p>Montag - Freitag: 08:00 - 16:00</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 MDK-IT. Alle Rechte vorbehalten.</p>
-        </div>
-    </footer>
-        <!-- JavaScript-Dateien am Ende des Body-Tags für bessere Ladezeiten -->
-    <script src="script.js" defer></script>
+    <div id="root"><!--app-html--></div>
+    <script type="module" src="/src/entries/home.jsx"></script>
 </body>
 
 </html>
