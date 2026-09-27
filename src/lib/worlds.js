@@ -405,7 +405,7 @@ function studioWorld(small, dot) {
   // FAQ: schwebende Kugeln
   const orbs = new THREE.Group();
   for (let i = 0; i < 4; i++) {
-    const o = new THREE.Mesh(new THREE.SphereGeometry(0.9, 32, 32), new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.2, roughness: 0.05, transmission: 0.6, transparent: true, opacity: 0.45, emissive: C.cyan, emissiveIntensity: 0.06 }));
+    const o = new THREE.Mesh(new THREE.SphereGeometry(0.9, 32, 32), new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.2, roughness: 0.05, transparent: true, opacity: 0.45, emissive: C.cyan, emissiveIntensity: 0.06 }));
     o.position.set(-4.5 + i * 3, 2, 0);
     orbs.add(o);
   }
