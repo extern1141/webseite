@@ -71,7 +71,7 @@ export default function Hero() {
             </Magnetic>
           </motion.div>
           <motion.p className="hero-hint" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.6 }}>
-            Tipp: Ziehen Sie den Globus mit der Maus, um ihn zu drehen.
+            Scrollen Sie – die Kamera fliegt mit Ihnen durch die Datenstadt.
           </motion.p>
         </motion.div>
 
@@ -82,12 +82,6 @@ export default function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease, delay: 0.3 }}
         >
-          {/* Der 3D-Globus (Scene3D) liegt hier im Hintergrund; diese Fläche hält ihm den Platz frei */}
-          <motion.div className="hero-globe-space" style={{ rotateX, rotateY }}>
-            <span className="globe-label">
-              <span className="pulse-dot" /> Ludwigsburg
-            </span>
-          </motion.div>
           <motion.div className="hero-chips" style={{ x: layerX, y: layerY }}>
             {chips.map((c, i) => (
               <motion.a

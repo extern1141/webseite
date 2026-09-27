@@ -7,7 +7,16 @@ import ScrollProgress from './ScrollProgress.jsx';
 import Navbar from './Navbar.jsx';
 import Footer from './Footer.jsx';
 import ConsentBanner from './ConsentBanner.jsx';
-import Scene3D from './Scene3D.jsx';
+import WorldJourney from './WorldJourney.jsx';
+
+const WORLD_FOR_PAGE = {
+  home: 'home',
+  'it-infrastruktur': 'network',
+  'webdesign-seo': 'studio',
+  'reparaturen-datenrettung': 'laptop',
+  impressum: 'vault',
+  datenschutz: 'vault',
+};
 
 // Grundgerüst jeder Seite: Navigation, Effekte, Footer und weiches Scrollen
 export default function Layout({ current, children }) {
@@ -25,7 +34,7 @@ export default function Layout({ current, children }) {
 
   return (
     <MotionConfig reducedMotion="user">
-      <Scene3D variant={current === 'home' ? 'home' : 'sub'} />
+      <WorldJourney world={WORLD_FOR_PAGE[current] || 'home'} />
       <Cursor />
       <ScrollProgress />
       <Navbar current={current} />
