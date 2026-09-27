@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import NetworkCanvas from './NetworkCanvas.jsx';
 
-// Version 4: feste 3D-Welt hinter der Seite. Jeder Wegpunkt der Kamera ist an einen
+// Version 5: fotorealistische Werkstatt hinter der Seite. Jeder Wegpunkt der Kamera ist an einen
 // Inhaltsbereich gekoppelt – die Kamera zeigt immer das Objekt zum Text, den man gerade liest.
 const ANCHORS = {
   home: ['#home', '.marquee', '.service-sticky:nth-child(1)', '.service-sticky:nth-child(2)', '.service-sticky:nth-child(3)', '.why-us', '#contact', 'footer'],
@@ -24,7 +24,7 @@ export default function WorldJourney({ world }) {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let disposed = false;
     let cleanup = () => {};
-    import('../lib/worlds.js').then(({ createWorld }) => {
+    import('../lib/office.js').then(({ createWorld }) => {
       if (disposed) return;
       const canvas = ref.current;
       const w = createWorld(canvas, world, { small: window.innerWidth < 760 });
@@ -74,6 +74,9 @@ export default function WorldJourney({ world }) {
           /* Speicher blockiert */
         }
       };
+      // ?hd in der Adresse: immer volle Qualität (für leistungsstarke Rechner / Präsentationen)
+      const hd = new URLSearchParams(window.location.search).has('hd');
+      if (hd) saved = 0;
       let quality = Math.min(saved, 3);
       if (quality) w.setQuality(quality);
       let slowSince = 0;
@@ -83,7 +86,7 @@ export default function WorldJourney({ world }) {
         const raw = now - last;
         const dt = Math.max(0, Math.min(raw / 1000, 0.05));
         last = now;
-        if (!reduce && !still && raw > 0) {
+        if (!hd && !reduce && !still && raw > 0) {
           avg = avg * 0.9 + raw * 0.1;
           if (avg > 45) {
             slowSince ||= now;
