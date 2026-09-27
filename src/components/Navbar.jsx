@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import { stopScroll } from '../lib/scroll.js';
 import { CONTACT, NAV } from '../content/site.js';
@@ -8,6 +8,9 @@ export default function Navbar({ current }) {
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [focusWithin, setFocusWithin] = useState(false);
+  const burgerRef = useRef(null);
+  const wasOpen = useRef(false);
   // Auf Seiten ohne Kontaktbereich (Impressum, Datenschutz) führt der Button zur Startseite
   const ctaHref = current === 'impressum' || current === 'datenschutz' ? '/#contact' : '#contact';
 
@@ -20,6 +23,10 @@ export default function Navbar({ current }) {
   useEffect(() => {
     stopScroll(open);
     document.body.style.overflow = open ? 'hidden' : '';
+    // Bei offenem Menü ist der Rest der Seite für Tastatur und Screenreader gesperrt
+    for (const el of document.querySelectorAll('main, footer')) el.inert = open;
+    if (!open && wasOpen.current) burgerRef.current?.focus({ preventScroll: true });
+    wasOpen.current = open;
     const onKey = (e) => e.key === 'Escape' && setOpen(false);
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -31,9 +38,12 @@ export default function Navbar({ current }) {
     <>
       <motion.nav
         className={`navbar ${scrolled ? 'is-scrolled' : ''}`}
-        animate={{ y: hidden ? '-110%' : '0%' }}
+        animate={{ y: hidden && !focusWithin ? '-110%' : '0%' }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         aria-label="Hauptnavigation"
+        // Mit der Tastatur fokussiert, bleibt die Leiste sichtbar
+        onFocus={() => setFocusWithin(true)}
+        onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setFocusWithin(false)}
       >
         <div className="container nav-inner">
           <a href="/" className="nav-brand" onClick={close}>
@@ -53,6 +63,7 @@ export default function Navbar({ current }) {
             Erstgespräch buchen
           </a>
           <button
+            ref={burgerRef}
             className={`hamburger ${open ? 'active' : ''}`}
             onClick={() => setOpen((o) => !o)}
             aria-label={open ? 'Menü schließen' : 'Menü öffnen'}
@@ -84,7 +95,12 @@ export default function Navbar({ current }) {
                   exit={{ opacity: 0, y: 20 }}
                   transition={{ delay: 0.2 + i * 0.07, duration: 0.5 }}
                 >
-                  <a href={l.href} onClick={close} className={current === l.key ? 'active' : undefined}>
+                  <a
+                    href={l.href}
+                    onClick={close}
+                    className={current === l.key ? 'active' : undefined}
+                    aria-current={current === l.key ? 'page' : undefined}
+                  >
                     <span className="mobile-index">0{i + 1}</span>
                     {l.label}
                   </a>

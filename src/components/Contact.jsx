@@ -15,14 +15,23 @@ const info = [
     icon: 'phone',
     lines: [
       <>
-        Telefon: <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+        Telefon: <a href={CONTACT.phoneHref} className="nowrap">{CONTACT.phone}</a>
       </>,
       <>
         E-Mail: <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
       </>,
     ],
   },
-  { title: 'Geschäftszeiten', icon: 'clock', lines: [CONTACT.hours, CONTACT.hoursNote] },
+  {
+    title: 'Geschäftszeiten',
+    icon: 'clock',
+    lines: [
+      <>
+        Montag - Freitag: <span className="nowrap">08:00 - 16:00 Uhr</span>
+      </>,
+      CONTACT.hoursNote,
+    ],
+  },
 ];
 
 // Kontaktformular mit Versand über Web3Forms (wie auf der bisherigen Seite).
@@ -114,7 +123,14 @@ export default function Contact({
                   </button>
                 </motion.div>
               ) : (
-                <motion.form key="form" className="contact-form" onSubmit={onSubmit} exit={{ opacity: 0, y: -20 }}>
+                <motion.form
+                  key="form"
+                  className="contact-form"
+                  action="https://api.web3forms.com/submit"
+                  method="POST"
+                  onSubmit={onSubmit}
+                  exit={{ opacity: 0, y: -20 }}
+                >
                   <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
                   <input type="hidden" name="subject" value={subject} />
                   <input type="checkbox" name="botcheck" className="hp-field" tabIndex={-1} autoComplete="off" aria-hidden="true" />
@@ -122,7 +138,7 @@ export default function Contact({
                     <Field id="name" label="Name *" required placeholder="Ihr vollständiger Name" autoComplete="name" />
                     <Field id="email" label="E-Mail *" type="email" required placeholder={emailPlaceholder} autoComplete="email" />
                     <Field id="phone" label="Telefonnummer" type="tel" placeholder="z.B. +49 177 123456" autoComplete="tel" />
-                    <div className="field">
+                    <div className="field full">
                       <label htmlFor="service-select">{interestLabel}</label>
                       <div className="select-wrap">
                         <select id="service-select" name="interessiert_an" required value={interest} onChange={(e) => setInterest(e.target.value)}>

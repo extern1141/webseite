@@ -25,7 +25,7 @@ export default function DetailRow({ image, alt, title, paragraphs, bullets, reve
         >
           <TiltCard className="detail-image" max={6}>
             <motion.img src={image} alt={alt} loading="lazy" decoding="async" width="1024" height="1024" style={{ y: imgY, scale: 1.18 }} />
-            {index !== undefined && <span className="detail-index">0{index + 1}</span>}
+            {index !== undefined && <span className="detail-index" aria-hidden="true">0{index + 1}</span>}
           </TiltCard>
         </motion.div>
       </motion.div>

@@ -25,8 +25,8 @@ export default function Hero() {
   const my = useMotionValue(0);
   const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [-14, 14]), { stiffness: 120, damping: 18 });
   const rotateX = useSpring(useTransform(my, [-0.5, 0.5], [12, -12]), { stiffness: 120, damping: 18 });
-  const layerX = useSpring(useTransform(mx, [-0.5, 0.5], [-30, 30]), { stiffness: 120, damping: 18 });
-  const layerY = useSpring(useTransform(my, [-0.5, 0.5], [-30, 30]), { stiffness: 120, damping: 18 });
+  const layerX = useSpring(useTransform(mx, [-0.5, 0.5], [-18, 18]), { stiffness: 120, damping: 18 });
+  const layerY = useSpring(useTransform(my, [-0.5, 0.5], [-18, 18]), { stiffness: 120, damping: 18 });
 
   const onMove = (e) => {
     if (e.pointerType !== 'mouse') return;

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { MotionConfig } from 'framer-motion';
 import { initSmoothScroll, handleAnchorClick, scrollToTarget } from '../lib/scroll.js';
+import { FOOTER } from '../content/site.js';
 import Cursor from './Cursor.jsx';
 import ScrollProgress from './ScrollProgress.jsx';
 import Navbar from './Navbar.jsx';
@@ -28,7 +29,7 @@ export default function Layout({ current, children }) {
       <ScrollProgress />
       <Navbar current={current} />
       <main id="top">{children}</main>
-      <Footer />
+      <Footer text={current === 'impressum' || current === 'datenschutz' ? FOOTER.textLegal : FOOTER.text} />
       <div className="grain" aria-hidden="true" />
     </MotionConfig>
   );

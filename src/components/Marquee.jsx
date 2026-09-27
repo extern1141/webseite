@@ -55,7 +55,7 @@ function Row({ baseVelocity, outline }) {
 
 export default function Marquee() {
   return (
-    <section className="marquee" aria-label="Leistungsbereiche">
+    <section className="marquee" aria-hidden="true">
       <Row baseVelocity={-2} />
       <Row baseVelocity={2} outline />
     </section>

@@ -21,6 +21,9 @@ export const NAV = [
 
 export const FOOTER = {
   text: 'Ihr zuverlässiger Partner für die komplette IT-Betreuung und digitale Präsenz von kleinen und mittelständischen Unternehmen sowie Start-ups.',
+  // Impressum und Datenschutz hatten im Original einen längeren Footer-Text
+  textLegal:
+    'Ihr zuverlässiger Partner für die komplette IT-Betreuung, Netzwerke und digitale Präsenz von kleinen und mittelständischen Unternehmen sowie Start-ups in Ludwigsburg und Umgebung.',
   columns: [
     {
       title: 'Dienstleistungen',

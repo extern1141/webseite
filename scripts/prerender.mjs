@@ -4,9 +4,10 @@ import { readFileSync, writeFileSync, rmSync } from 'node:fs';
 import { pages } from '../vite.config.js';
 
 const { render } = await import('../dist-ssr/entry-server.js');
+const outDir = process.env.OUT_DIR || 'dist';
 
 for (const [file, key] of Object.entries(pages)) {
-  const path = `dist/${file}.html`;
+  const path = `${outDir}/${file}.html`;
   const html = readFileSync(path, 'utf8');
   if (!html.includes('<!--app-html-->')) throw new Error(`Platzhalter fehlt in ${path}`);
   writeFileSync(path, html.replace('<!--app-html-->', render(key)));

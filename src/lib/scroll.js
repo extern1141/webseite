@@ -33,7 +33,7 @@ export function scrollToTarget(target) {
   }
   const el = typeof target === 'string' ? document.querySelector(target) : target;
   if (!el) return;
-  if (lenis) lenis.scrollTo(el, { offset: NAV_OFFSET });
+  if (lenis) lenis.scrollTo(el);
   else window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY + NAV_OFFSET, behavior: 'smooth' });
 }
 
