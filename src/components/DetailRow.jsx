@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import Icon from './Icon.jsx';
 import TiltCard from './TiltCard.jsx';
 
@@ -9,7 +9,8 @@ const ease = [0.22, 1, 0.36, 1];
 export default function DetailRow({ image, alt, title, paragraphs, bullets, reverse, index }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const imgY = useTransform(scrollYProgress, [0, 1], ['-8%', '8%']);
+  const still = useReducedMotion();
+  const imgY = useTransform(scrollYProgress, [0, 1], still ? ['0%', '0%'] : ['-8%', '8%']);
 
   return (
     <div className={`detail-row ${reverse ? 'reverse' : ''}`} ref={ref}>

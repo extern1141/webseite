@@ -8,7 +8,7 @@ export function SplitReveal({ text, as: Tag = 'span', className, delay = 0, anim
   const words = text.split(' ');
   const trigger = animate === undefined ? { whileInView: 'show', viewport: { once: true, amount: 0.6 } } : { animate: animate ? 'show' : 'hidden' };
   return (
-    <Tag className={className} aria-label={text}>
+    <Tag className={className} aria-label={Tag === 'span' ? undefined : text}>
       <motion.span
         initial="hidden"
         {...trigger}
@@ -35,14 +35,14 @@ export function SplitReveal({ text, as: Tag = 'span', className, delay = 0, anim
   );
 }
 
-export function FadeUp({ children, delay = 0, className, as = 'div', y = 40 }) {
+export function FadeUp({ children, delay = 0, className, as = 'div', y = 40, amount = 0.3 }) {
   const Comp = motion[as];
   return (
     <Comp
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={{ once: true, amount }}
       transition={{ duration: 0.9, ease, delay }}
     >
       {children}

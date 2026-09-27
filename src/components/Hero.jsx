@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import NetworkCanvas from './NetworkCanvas.jsx';
 import Magnetic from './Magnetic.jsx';
 import Icon from './Icon.jsx';
@@ -14,11 +14,13 @@ const chips = [
 
 export default function Hero() {
   const ref = useRef(null);
+  // Bei "Bewegung reduzieren" bleiben die Scroll-Effekte stehen
+  const still = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '40%']);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const visualY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
-  const visualScale = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', still ? '0%' : '40%']);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, still ? 1 : 0]);
+  const visualY = useTransform(scrollYProgress, [0, 1], ['0%', still ? '0%' : '20%']);
+  const visualScale = useTransform(scrollYProgress, [0, 1], [1, still ? 1 : 0.85]);
 
   // 3D-Neigung des Bildes abhängig von der Mausposition
   const mx = useMotionValue(0);

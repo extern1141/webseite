@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import TiltCard from './TiltCard.jsx';
 import Icon from './Icon.jsx';
 import { SplitReveal, FadeUp } from './Reveal.jsx';
@@ -25,8 +25,9 @@ const features = [
 export default function WhyUs() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const imgY = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
-  const frameRotate = useTransform(scrollYProgress, [0, 1], [-6, 6]);
+  const still = useReducedMotion();
+  const imgY = useTransform(scrollYProgress, [0, 1], still ? ['0%', '0%'] : ['-10%', '10%']);
+  const frameRotate = useTransform(scrollYProgress, [0, 1], still ? [0, 0] : [-6, 6]);
 
   return (
     <section className="why-us" ref={ref}>

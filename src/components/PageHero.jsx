@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import NetworkCanvas from './NetworkCanvas.jsx';
 import { SplitReveal } from './Reveal.jsx';
 
@@ -9,8 +9,9 @@ const ease = [0.22, 1, 0.36, 1];
 export default function PageHero({ badge, title, text, compact }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '35%']);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const still = useReducedMotion();
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', still ? '0%' : '35%']);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, still ? 1 : 0]);
 
   return (
     <section className={`page-hero ${compact ? 'compact' : ''}`} ref={ref}>

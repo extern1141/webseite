@@ -24,7 +24,7 @@ function Row({ baseVelocity, outline }) {
   const { scrollY } = useScroll();
   const velocity = useSpring(useVelocity(scrollY), { damping: 50, stiffness: 400 });
   const factor = useTransform(velocity, [-1000, 0, 1000], [-4, 0, 4], { clamp: false });
-  const skew = useTransform(velocity, [-2000, 0, 2000], [8, 0, -8]);
+  const skew = useTransform(velocity, [-2000, 0, 2000], reduce ? [0, 0, 0] : [8, 0, -8]);
   const x = useTransform(baseX, (v) => `${wrap(-50, 0, v)}%`);
   const dir = useRef(1);
 

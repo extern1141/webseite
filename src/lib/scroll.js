@@ -2,6 +2,17 @@ import Lenis from 'lenis';
 
 let lenis = null;
 const NAV_OFFSET = -90;
+const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Element zu einem #fragment finden – ohne Fehler bei Fragmenten wie #2024 oder #!kontakt
+export function findHashTarget(hash) {
+  if (!hash || hash.length < 2) return null;
+  try {
+    return document.getElementById(decodeURIComponent(hash.slice(1)));
+  } catch {
+    return null;
+  }
+}
 
 export function initSmoothScroll() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return () => {};
@@ -28,13 +39,19 @@ export function stopScroll(stop) {
 export function scrollToTarget(target) {
   if (target === '#home' || target === '#top' || target === 0) {
     if (lenis) lenis.scrollTo(0);
-    else window.scrollTo({ top: 0, behavior: 'smooth' });
+    else window.scrollTo({ top: 0, behavior: reducedMotion() ? 'auto' : 'smooth' });
     return;
   }
-  const el = typeof target === 'string' ? document.querySelector(target) : target;
+  const el = typeof target === 'string' ? findHashTarget(target) : target;
   if (!el) return;
   if (lenis) lenis.scrollTo(el);
-  else window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY + NAV_OFFSET, behavior: 'smooth' });
+  else window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY + NAV_OFFSET, behavior: reducedMotion() ? 'auto' : 'smooth' });
+}
+
+// Tastaturfokus an das Sprungziel übergeben (wie beim normalen Browser-Sprung)
+function moveFocus(el) {
+  if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
+  el.focus({ preventScroll: true });
 }
 
 // Klicks auf Links zu Abschnitten derselben Seite (#contact, /#contact auf der Startseite) weich scrollen
@@ -46,8 +63,9 @@ export function handleAnchorClick(e) {
   if (!url.hash || url.origin !== window.location.origin) return;
   const samePage = url.pathname === window.location.pathname || (url.pathname === '/' && /\/index\.html$/.test(window.location.pathname));
   if (!samePage) return;
-  const el = url.hash === '#top' ? 0 : document.querySelector(url.hash);
-  if (el === null) return;
+  const el = url.hash === '#top' ? document.getElementById('top') : findHashTarget(url.hash);
+  if (!el) return;
   e.preventDefault();
-  scrollToTarget(el === 0 ? '#top' : el);
+  scrollToTarget(url.hash === '#top' ? '#top' : el);
+  moveFocus(el);
 }

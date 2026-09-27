@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import TiltCard from './TiltCard.jsx';
 import Icon from './Icon.jsx';
 import { SectionHeader } from './Reveal.jsx';
@@ -40,11 +40,12 @@ const pillars = [
 function PillarCard({ pillar, index, total, progress }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'start start'] });
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1.35, 1]);
+  const still = useReducedMotion();
+  const imgScale = useTransform(scrollYProgress, [0, 1], [still ? 1 : 1.35, 1]);
   // Vorherige Karten werden kleiner und dunkler, wenn die nächste darüber gleitet
   const start = index / total;
-  const scale = useTransform(progress, [start, 1], [1, 1 - (total - index - 1) * 0.05]);
-  const dim = useTransform(progress, [start, Math.min(start + 1 / total, 1)], [0, index === total - 1 ? 0 : 0.45]);
+  const scale = useTransform(progress, [start, 1], [1, still ? 1 : 1 - (total - index - 1) * 0.05]);
+  const dim = useTransform(progress, [start, Math.min(start + 1 / total, 1)], [0, index === total - 1 || still ? 0 : 0.45]);
 
   return (
     <div className="service-sticky" ref={ref} style={{ top: `calc(14vh + ${index * 28}px)` }}>

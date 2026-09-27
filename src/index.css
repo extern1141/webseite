@@ -236,6 +236,9 @@ h3 {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
+[tabindex='-1']:focus {
+  outline: none;
+}
 
 /* ============================================
    Cursor, Scroll progress
@@ -863,6 +866,15 @@ h3 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.service-sticky:focus-within {
+  z-index: 5;
+}
+.service-sticky:focus-within .service-card-wrap {
+  transform: none !important;
+}
+.service-sticky:focus-within .service-dim {
+  opacity: 0 !important;
 }
 .service-dim {
   position: absolute;
@@ -1764,6 +1776,12 @@ h3 {
 }
 .faq-answer > div {
   overflow: hidden;
+  visibility: hidden;
+  transition: visibility 0s linear 0.5s;
+}
+.faq-item.open .faq-answer > div {
+  visibility: visible;
+  transition-delay: 0s;
 }
 .faq-answer p {
   padding: 0 28px 26px;
@@ -2029,6 +2047,12 @@ h3 {
   .field textarea {
     font-size: 16px;
     text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 400px) {
+  .contact-form-wrap {
+    padding: 24px 18px;
   }
 }
 

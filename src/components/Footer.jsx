@@ -1,12 +1,13 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { FOOTER } from '../content/site.js';
 
 export default function Footer({ text = FOOTER.text }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end end'] });
-  const y = useTransform(scrollYProgress, [0, 1], ['50%', '0%']);
-  const letterSpacing = useTransform(scrollYProgress, [0, 1], ['0.3em', '0em']);
+  const still = useReducedMotion();
+  const y = useTransform(scrollYProgress, [0, 1], [still ? '0%' : '50%', '0%']);
+  const letterSpacing = useTransform(scrollYProgress, [0, 1], [still ? '0em' : '0.3em', '0em']);
 
   return (
     <footer className="footer" ref={ref}>

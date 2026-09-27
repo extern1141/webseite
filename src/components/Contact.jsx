@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SplitReveal, FadeUp } from './Reveal.jsx';
 import Magnetic from './Magnetic.jsx';
@@ -52,6 +52,16 @@ export default function Contact({
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
   const [error, setError] = useState('');
   const [interest, setInterest] = useState(defaultInterest);
+  const refocusForm = useRef(false);
+
+  // Tastaturfokus nicht verlieren, wenn Formular und Bestätigung wechseln.
+  // Die Elemente erscheinen erst nach der Übergangsanimation, daher Fokus beim Einhängen.
+  const focusSuccess = (el) => el?.focus({ preventScroll: true });
+  const focusForm = (el) => {
+    if (!el || !refocusForm.current) return;
+    refocusForm.current = false;
+    el.querySelector('#name')?.focus({ preventScroll: true });
+  };
 
   // Buttons wie "Dieses Paket anfragen" wählen das passende Interesse vor
   useEffect(() => {
@@ -63,6 +73,14 @@ export default function Contact({
   const onSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
+    // Wie im Original: Pflichtfelder, die nur Leerzeichen enthalten, zählen als leer
+    const blank = [...form.querySelectorAll('[required]')].find((f) => !f.value.trim());
+    if (blank) {
+      blank.setCustomValidity('Bitte füllen Sie dieses Feld aus.');
+      blank.reportValidity();
+      blank.addEventListener('input', () => blank.setCustomValidity(''), { once: true });
+      return;
+    }
     setStatus('sending');
     setError('');
     try {
@@ -102,11 +120,13 @@ export default function Contact({
         </header>
 
         <div className="contact-wrapper">
-          <FadeUp className="contact-form-wrap">
+          <FadeUp className="contact-form-wrap" amount={0.05}>
             <AnimatePresence mode="wait" initial={false}>
               {status === 'sent' ? (
                 <motion.div
                   key="done"
+                  ref={focusSuccess}
+                  tabIndex={-1}
                   className="form-success"
                   role="status"
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -118,13 +138,20 @@ export default function Contact({
                     <motion.path d="M15 27 l7 7 l15 -16" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.4, delay: 0.5 }} />
                   </svg>
                   <p>{SUCCESS_TEXT}</p>
-                  <button className="btn btn-ghost" onClick={() => setStatus('idle')}>
+                  <button
+                    className="btn btn-ghost"
+                    onClick={() => {
+                      refocusForm.current = true;
+                      setStatus('idle');
+                    }}
+                  >
                     Neue Nachricht
                   </button>
                 </motion.div>
               ) : (
                 <motion.form
                   key="form"
+                  ref={focusForm}
                   className="contact-form"
                   action="https://api.web3forms.com/submit"
                   method="POST"
