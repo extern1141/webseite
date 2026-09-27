@@ -6,6 +6,7 @@ import Cursor from './Cursor.jsx';
 import ScrollProgress from './ScrollProgress.jsx';
 import Navbar from './Navbar.jsx';
 import Footer from './Footer.jsx';
+import ConsentBanner from './ConsentBanner.jsx';
 
 // Grundgerüst jeder Seite: Navigation, Effekte, Footer und weiches Scrollen
 export default function Layout({ current, children }) {
@@ -30,6 +31,7 @@ export default function Layout({ current, children }) {
         {children}
       </main>
       <Footer text={current === 'impressum' || current === 'datenschutz' ? FOOTER.textLegal : FOOTER.text} />
+      <ConsentBanner />
       <div className="grain" aria-hidden="true" />
     </MotionConfig>
   );

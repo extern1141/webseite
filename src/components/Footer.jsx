@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { FOOTER } from '../content/site.js';
+import { openConsentSettings } from '../lib/consent.js';
 
 export default function Footer({ text = FOOTER.text }) {
   const ref = useRef(null);
@@ -38,6 +39,9 @@ export default function Footer({ text = FOOTER.text }) {
           <div className="footer-legal-links">
             <a href="/impressum.html">Impressum</a>
             <a href="/datenschutz.html">Datenschutz</a>
+            <button type="button" className="footer-consent" onClick={openConsentSettings}>
+              Cookie-Einstellungen
+            </button>
             <a href="#top" className="to-top">
               Nach oben ↑
             </a>

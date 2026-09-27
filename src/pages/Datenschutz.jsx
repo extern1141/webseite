@@ -11,8 +11,8 @@ export default function Datenschutz() {
         <h2>1. Datenschutz auf einen Blick</h2>
         <h3>Allgemeine Hinweise</h3>
         <p>
-          Diese Webseite ist eine rein statische Informationsseite. Der Betreiber dieser Seite (MDK-IT) sammelt, speichert, analysiert oder
-          verarbeitet selbst keinerlei personenbezogene Daten von Ihnen.
+          Diese Webseite ist eine Informationsseite. Personenbezogene Daten werden nur verarbeitet, wenn Sie uns über das Kontaktformular
+          schreiben oder der Nutzung von Google Analytics ausdrücklich zustimmen (siehe Abschnitt 3).
         </p>
         <h3>Automatische technische Bereitstellung (Hosting)</h3>
         <p>
@@ -92,6 +92,20 @@ export default function Datenschutz() {
           übertragen, um sie per E-Mail an uns zuzustellen. Web3Forms speichert die Nachrichteninhalte nicht dauerhaft, sondern fungiert
           ausschließlich als sichere Übermittlungsbrücke. Die Nutzung erfolgt auf Grundlage unseres berechtigten Interesses an einer sicheren,
           spamgeschützten und zuverlässigen Formularabwicklung (Art. 6 Abs. 1 lit. f DSGVO).
+        </p>
+
+        <h3>Google Analytics (nur mit Einwilligung)</h3>
+        <p>
+          Sofern Sie im Cookie-Hinweis zustimmen, nutzt diese Website Google Analytics 4, einen Webanalysedienst der{' '}
+          <strong>Google Ireland Limited</strong>, Gordon House, Barrow Street, Dublin 4, Irland. Google Analytics setzt Cookies und erfasst
+          Informationen über die Nutzung dieser Website (z. B. aufgerufene Seiten, Verweildauer, Gerät und ungefährer Standort). Diese
+          Informationen werden an Server von Google übertragen und können auch in die USA übermittelt werden; Google ist nach dem
+          EU-US Data Privacy Framework zertifiziert.
+        </p>
+        <p>
+          Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG). Ohne Ihre Zustimmung wird Google Analytics
+          nicht geladen. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen“ am Ende jeder Seite widerrufen. Ihre
+          Auswahl wird dazu im lokalen Speicher Ihres Browsers abgelegt.
         </p>
 
         <h2>4. Besonderer Schutz bei Reparaturen & Datenrettung</h2>
